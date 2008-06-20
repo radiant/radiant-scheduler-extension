@@ -1,0 +1,29 @@
+= Scheduler
+
+Created by: Sean Cribbs, September 2007
+
+The Scheduler extension creates publish and expiration dates (or
+appearance and disappearance) that are configurable by the content
+editor.  These may be set in the "meta" area of the page editing
+screen, and include a calendar-style date picker, thanks to Dan Webb's
+wonderful LowPro library (and his date_selector behavior).  These
+dates only affect what may be found from the 'live' site.  All pages
+are accessible when in 'dev' or 'preview' mode.
+
+== Installation
+
+1) Install the "shards" extension and set it to load first using the
+   config.extensions property in config/environment.rb of your Radiant
+   project. (this is required until shards is folded into core)
+2) Use Subversion to checkout or export the extension into
+   vendor/extensions of your Radiant project.
+3) Run 'rake production db:migrate:extensions radiant:extensions:scheduler:update' 
+   (substitute development if you are using that env)
+4) (Re)start your server.
+5) If you want to run the extension tests, make sure to run 
+   'rake db:test:prepare' before you begin.
+   
+== Acknowledgments
+
+Thanks to Digital Pulp, Inc. for funding the initial development of this
+extension as part of the Redken.com project.

@@ -1,0 +1,72 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+homepage:
+  id: 1
+  title: Home Page
+  breadcrumb: Home
+  slug: /
+  status_id: 100
+  parent_id:
+  published_at: 2006-01-30 08:41:07 
+  appears_on:
+  expires_on:
+expired_with_blank_start:
+  id: 2
+  title: Expired with blank start
+  breadcrumb: Expired with blank start
+  slug: expired-with-blank-start
+  status_id: 100
+  parent_id: 1
+  published_at: 2006-01-30 08:41:07 
+  appears_on:
+  expires_on: <%= (Date.today-1).to_s(:db) %>
+unexpired_with_blank_start:
+  id: 3
+  title: Unexpired with blank start
+  breadcrumb: Unexpired with blank start
+  slug: unexpired-with-blank-start
+  status_id: 100
+  parent_id: 1
+  published_at: 2006-01-30 08:41:07 
+  appears_on:
+  expires_on: <%= (Date.today+1).to_s(:db) %>
+all_blank:
+  id: 4
+  title: All blank
+  breadcrumb: All blank
+  slug: all-blank
+  status_id: 100
+  parent_id: 1
+  published_at: 2006-01-30 08:41:07 
+  appears_on:
+  expires_on:
+unexpired:
+  id: 5
+  title: Unexpired
+  breadcrumb: Unexpired
+  slug: unexpired
+  status_id: 100
+  parent_id: 1
+  published_at: 2006-01-30 08:41:07 
+  appears_on: <%= (Date.today-1).to_s(:db) %>
+  expires_on: <%= (Date.today+1).to_s(:db) %>
+unpublished_with_blank_end:
+  id: 6
+  title: Unpublished with blank end
+  breadcrumb: Unpublished with blank end
+  slug: unpublished-with-blank-end
+  status_id: 100
+  parent_id: 1
+  published_at: 2006-01-30 08:41:07 
+  appears_on: <%= (Date.today+1).to_s(:db) %>
+  expires_on:
+unpublished:
+  id: 7
+  title: Unpublished
+  breadcrumb: Unpublished
+  slug: unpublished
+  status_id: 100
+  parent_id: 1
+  published_at: 2006-01-30 08:41:07 
+  appears_on: <%= (Date.today+1).to_s(:db) %>
+  expires_on: <%= (Date.today+2).to_s(:db) %>
+

@@ -1,0 +1,7 @@
+homepage_body:
+  filter_id: Textile
+  name: body
+  page_id: 1
+  content: |
+    <r:children:each>* <r:title />
+    </r:children:each>
