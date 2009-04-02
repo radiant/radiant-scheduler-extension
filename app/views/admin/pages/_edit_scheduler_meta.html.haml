@@ -1,0 +1,48 @@
+%tr
+  %td{:class=>"label"} Scheduler
+  %td{:class => "field", :style => "text-align: center"}
+    %label{:for => "page_appears_on", :style => "padding: 0 10px;"} Publish date
+    = text_field "page", "appears_on", :size => 15
+    %label{:for => "page_expires_on", :style => "padding: 0 10px;"} Expiration date
+    = text_field "page", "expires_on", :size => 15
+- include_javascript 'lowpro'
+- include_javascript 'date_selector'
+- content_for :page_scripts do
+  :plain
+    Event.addBehavior({
+      '#page_appears_on, #page_expires_on': DateSelector
+    });
+- content_for :page_css do
+  :sass
+    #page_expires_on, #page_appears_on
+      :position relative
+    table.calendar
+      :background white
+      :border 1px solid black
+      td
+        :padding 2px
+        :border 1px solid #eee
+        :background white
+        :text-align right
+        &.today
+          a
+            color: red ! important
+        &.selected
+          :background #ddd
+          :font-weight bold
+          :border-color black
+          :border-width 2px
+      .back, .forward
+        :background #ddd
+      th
+        :background #eee
+      a
+        :text-decoration none
+        :color black
+      tbody
+        tr:last-child td
+          :border-bottom 1px solid black
+        td:first-child
+          :border-left 1px solid black
+        td:last-child
+          :border-right 1px solid black
