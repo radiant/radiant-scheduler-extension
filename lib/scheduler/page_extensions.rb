@@ -6,9 +6,6 @@ module Scheduler::PageExtensions
     class << base
       alias_method_chain :find_by_url, :scheduling
     end
-    # base.class_eval do
-    #   alias_method_chain :render, :scheduling
-    # end
   end
 
   module ClassMethods

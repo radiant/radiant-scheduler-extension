@@ -9,10 +9,6 @@ class SchedulerExtension < Radiant::Extension
   def activate
     Page.send :include, Scheduler::PageExtensions
     SiteController.send :include, Scheduler::ControllerExtensions
-    admin.page.edit.add :extended_metadata, "edit_scheduler_meta"
+    admin.pages.edit.add :extended_metadata, "edit_scheduler_meta"
   end
-  
-  def deactivate
-  end
-  
 end
