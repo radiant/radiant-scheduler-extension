@@ -11,15 +11,18 @@ namespace :radiant do
           SchedulerExtension.migrator.migrate
         end
       end
-    
-      desc "Copies Scheduler extension assets to the public directory."
+      
+      desc "Copies public assets of the Scheduler to the instance public/ directory."
       task :update => :environment do
-        ext_js_dir = SchedulerExtension.root + "/public/javascripts"
-        Dir[ext_js_dir + "/*.js"].each do |file|
-          puts "Copying #{File.basename(file)}..."
-          cp file, RAILS_ROOT + "/public/javascripts"
+        is_svn_or_dir = proc {|path| path =~ /\.svn/ || File.directory?(path) }
+        puts "Copying assets from SchedulerExtension"
+        Dir[SchedulerExtension.root + "/public/**/*"].reject(&is_svn_or_dir).each do |file|
+          path = file.sub(SchedulerExtension.root, '')
+          directory = File.dirname(path)
+          mkdir_p RAILS_ROOT + directory, :verbose => false
+          cp file, RAILS_ROOT + path, :verbose => false
         end
-      end
+      end  
     end
   end
 end

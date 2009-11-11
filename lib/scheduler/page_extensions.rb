@@ -1,6 +1,6 @@
 module Scheduler::PageExtensions
   include Radiant::Taggable
-  
+
   def self.included(base)
     base.extend ClassMethods
     class << base
@@ -18,37 +18,41 @@ module Scheduler::PageExtensions
         find_by_url_without_scheduling(url, live)
       end
     end
-    
-    def with_published_only(&block)
-      raise ArgumentError, "Block required!" unless block_given?
-      # Let's not duplicate the scope, but also not obliterate any incoming scope
-      unless @with_published
-        @with_published = true
-        results = with_scope(:find => {:conditions => ["((appears_on IS NULL AND expires_on IS NULL) OR (appears_on IS NULL AND ? <= expires_on) OR (expires_on IS NULL AND ? >= appears_on) OR (? BETWEEN appears_on AND expires_on))", Date.today, Date.today, Date.today]}, &block)
-        @with_published = false
-        results
+
+    def with_published_only
+      if @with_published
+        yield
       else
-        block.call
+        @with_published = true
+        result = with_scope(:find => {:conditions => ["(appears_on IS NULL OR appears_on <= ?) AND (expires_on IS NULL OR expires_on > ?)", Date.today, Date.today]}) do
+          yield
+        end
+        @with_published = false
+        result
       end
     end
   end
-  
+
   def visible?
     published? && appeared? && !expired?
   end
-  
+
   def appeared?
     appears_on.blank? || appears_on <= Date.today
   end
-  
+
   def expired?
     !expires_on.blank? && self.expires_on < Date.today
   end
-  
+
   tag 'children' do |tag|
     tag.locals.children = tag.locals.page.children
-    Page.with_published_only do
+    if dev?(tag.globals.page.request)
       tag.expand
+    else
+      Page.with_published_only do
+        tag.expand
+      end
     end
   end
 end

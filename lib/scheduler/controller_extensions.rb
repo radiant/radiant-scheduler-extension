@@ -1,13 +1,14 @@
 module Scheduler::ControllerExtensions
   def self.included(base)
-    base.class_eval { alias_method_chain :process_page, :scheduling }
+    base.class_eval { around_filter :filter_with_scheduler }
   end
-  
-  def process_page_with_scheduling(page)
+
+  protected
+  def filter_with_scheduler
     if live?
-      Page.with_published_only { process_page_without_scheduling(page) }
+      Page.with_published_only { yield }
     else
-      process_page_without_scheduling(page)
+      yield
     end
   end
 end
