@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'ruby-debug'
+
 describe "Scheduler::PageExtensions" do
   dataset :pages_with_scheduling
 
