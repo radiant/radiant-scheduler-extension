@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd ~/radiant
+bundle exec rake spec:extensions EXT=scheduler
