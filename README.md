@@ -1,5 +1,6 @@
 # Radiant Scheduler Extension
 
+[![Build Status](https://secure.travis-ci.org/radiant/radiant-scheduler-extension.png?branch=master)](http://travis-ci.org/radiant/radiant-scheduler-extension)
 
 Created by: Sean Cribbs, September 2007
 
