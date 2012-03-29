@@ -1,9 +1,3 @@
-# I think this is the one that should be moved to the extension Rakefile template
-
-# In rails 1.2, plugins aren't available in the path until they're loaded.
-# Check to see if the rspec plugin is installed first and require
-# it if it is.  If not, use the gem version.
-
 # Determine where the RSpec plugin is by loading the boot
 unless defined? RADIANT_ROOT
   ENV["RAILS_ENV"] = "test"
@@ -18,7 +12,7 @@ unless defined? RADIANT_ROOT
 end
 
 require 'rake'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rake/testtask'
 
 rspec_base = File.expand_path(RADIANT_ROOT + '/vendor/plugins/rspec/lib')
@@ -32,7 +26,7 @@ Object.send(:remove_const, :RADIANT_ROOT)
 
 extension_root = File.expand_path(File.dirname(__FILE__))
 
-task :default => :spec
+task :default => [:spec, :features]
 task :stats => "spec:statsetup"
 
 desc "Run all specs in spec directory"
@@ -103,20 +97,12 @@ namespace :spec do
 end
 
 desc 'Generate documentation for the scheduler extension.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
+RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'SchedulerExtension'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-# For extensions that are in transition
-desc 'Test the scheduler extension.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
 end
 
 # Load any custom rakefiles for extension
