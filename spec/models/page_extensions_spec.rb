@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.expand_path '../../spec_helper', __FILE__
 
 describe "Scheduler::PageExtensions" do
   dataset :pages_with_scheduling
