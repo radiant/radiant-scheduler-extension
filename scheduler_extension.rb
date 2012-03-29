@@ -2,9 +2,9 @@
 require_dependency 'application_controller'
 
 class SchedulerExtension < Radiant::Extension
-  version "0.2"
-  description "Allows setting of appearance and expiration dates for pages."
-  url "http://dev.radiantcms.org"
+  version RadiantSchedulerExtension::VERSION
+  description RadiantSchedulerExtension::DESCRIPTION
+  url RadiantSchedulerExtension::URL
     
   def activate
     Page.send :include, Scheduler::PageExtensions
