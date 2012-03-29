@@ -4,27 +4,27 @@ describe "Scheduler::PageExtensions" do
   dataset :pages_with_scheduling
 
   describe "finding pages" do
-    it "should wrap the find_by_url method" do
-      Page.should respond_to(:find_by_url_with_scheduling)
+    it "should wrap the find_by_path method" do
+      Page.should respond_to(:find_by_path_with_scheduling)
     end
 
     it "should find visible pages in both modes" do
       [true, false].each do |live|
         [:blank_schedule, :visible, :visible_blank_start, :visible_blank_end].each do |page|
-          Page.find_by_url(pages(page).url, live).should == pages(page)
+          Page.find_by_path(pages(page).url, live).should == pages(page)
         end
       end
     end
 
     it "should not find pages scheduled outside the window when live" do
       [:expired, :expired_blank_start, :unappeared, :unappeared_blank_end].each do |page|
-        Page.find_by_url(pages(page).url).should_not == pages(page)
+        Page.find_by_path(pages(page).url).should_not == pages(page)
       end
     end
 
     it "should find pages scheduled outside the window when dev" do
       [:expired, :expired_blank_start, :unappeared, :unappeared_blank_end].each do |page|
-        Page.find_by_url(pages(page).url, false).should == pages(page)
+        Page.find_by_path(pages(page).url, false).should == pages(page)
       end
     end
   end

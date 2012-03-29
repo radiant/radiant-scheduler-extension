@@ -4,18 +4,18 @@ module Scheduler::PageExtensions
   def self.included(base)
     base.extend ClassMethods
     class << base
-      alias_method_chain :find_by_url, :scheduling
+      alias_method_chain :find_by_path, :scheduling
     end
   end
 
   module ClassMethods
-    def find_by_url_with_scheduling(url, live=true)
+    def find_by_path_with_scheduling(url, live=true)
       if live
         self.with_published_only do
-          find_by_url_without_scheduling(url, live)
+          find_by_path_without_scheduling(url, live)
         end
       else
-        find_by_url_without_scheduling(url, live)
+        find_by_path_without_scheduling(url, live)
       end
     end
 
