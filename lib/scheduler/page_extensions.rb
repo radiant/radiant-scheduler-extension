@@ -24,8 +24,7 @@ module Scheduler::PageExtensions
         yield
       else
         @with_published = true
-        now = lambda{ return Date.today }.call
-        result = with_scope(:find => {:conditions => ["(appears_on IS NULL OR appears_on <= ?) AND (expires_on IS NULL OR expires_on > ?)", now, now]}) do
+        result = with_scope(:find => {:conditions => ["(appears_on IS NULL OR appears_on <= ?) AND (expires_on IS NULL OR expires_on > ?)", lambda{Date.today}.call, lambda{Date.today}.call]}) do
           yield
         end
         @with_published = false
