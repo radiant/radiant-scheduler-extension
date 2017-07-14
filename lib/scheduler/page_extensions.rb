@@ -33,18 +33,6 @@ module Scheduler::PageExtensions
     end
   end
 
-  def visible?
-    published? && appeared? && !expired?
-  end
-
-  def appeared?
-    appears_on.blank? || appears_on <= Date.today
-  end
-
-  def expired?
-    !expires_on.blank? && self.expires_on < Date.today
-  end
-
   tag 'children' do |tag|
     tag.locals.children = tag.locals.page.children
     if dev?(tag.globals.page.request)
