@@ -20,15 +20,8 @@ module Scheduler::PageExtensions
     end
 
     def with_published_only
-      if @with_published
+      with_scope(:find => {:conditions => ["(`pages`.appears_on IS NULL OR `pages`.appears_on <= ?) AND (`pages`.expires_on IS NULL OR `pages`.expires_on > ?)", lambda{Date.today}.call, lambda{Date.today}.call]}) do
         yield
-      else
-        @with_published = true
-        result = with_scope(:find => {:conditions => ["(appears_on IS NULL OR appears_on <= ?) AND (expires_on IS NULL OR expires_on > ?)", lambda{Date.today}.call, lambda{Date.today}.call]}) do
-          yield
-        end
-        @with_published = false
-        result
       end
     end
   end
